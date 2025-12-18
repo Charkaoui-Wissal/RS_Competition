@@ -1,0 +1,171 @@
+<svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="800" fill="#f8f9fa"/>
+  
+  <!-- Title -->
+  <text x="600" y="40" font-family="Georgia, serif" font-size="28" font-weight="bold" text-anchor="middle" fill="#1a1a1a">
+    MMCTR: Multimodal Click-Through Rate Prediction
+  </text>
+  <text x="600" y="65" font-family="Arial" font-size="14" text-anchor="middle" fill="#666">
+    Deep Interest Network with Fused Text-Image Embeddings
+  </text>
+  
+  <!-- Part 1: Feature Engineering -->
+  <rect x="50" y="100" width="520" height="280" fill="none" stroke="#2c5aa0" stroke-width="2" stroke-dasharray="5,5"/>
+  <text x="60" y="125" font-family="Courier New" font-size="16" font-weight="bold" fill="#2c5aa0">
+    PART 1: FEATURE ENGINEERING
+  </text>
+  
+  <!-- Text Data Path -->
+  <rect x="80" y="150" width="140" height="60" fill="#e3f2fd" stroke="#1976d2" stroke-width="2" rx="5"/>
+  <text x="150" y="175" font-family="Arial" font-size="13" text-anchor="middle" fill="#1565c0">Text Data</text>
+  <text x="150" y="195" font-family="Courier New" font-size="11" text-anchor="middle" fill="#666">item_feature.parquet</text>
+  
+  <!-- BERT -->
+  <rect x="250" y="155" width="90" height="50" fill="#ff6b35" stroke="#d94e2a" stroke-width="2" rx="3"/>
+  <text x="295" y="177" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">BERT</text>
+  <text x="295" y="195" font-family="Courier New" font-size="10" text-anchor="middle" fill="white">768D</text>
+  
+  <!-- Arrow Text to BERT -->
+  <path d="M 220 180 L 250 180" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Image Data Path -->
+  <rect x="80" y="240" width="140" height="60" fill="#fff3e0" stroke="#f57c00" stroke-width="2" rx="5"/>
+  <text x="150" y="265" font-family="Arial" font-size="13" text-anchor="middle" fill="#e65100">Image Data</text>
+  <text x="150" y="285" font-family="Courier New" font-size="11" text-anchor="middle" fill="#666">item_images/*.jpg</text>
+  
+  <!-- CLIP -->
+  <rect x="250" y="245" width="90" height="50" fill="#4caf50" stroke="#388e3c" stroke-width="2" rx="3"/>
+  <text x="295" y="267" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">CLIP</text>
+  <text x="295" y="285" font-family="Courier New" font-size="10" text-anchor="middle" fill="white">ViT-B/32</text>
+  
+  <!-- Arrow Image to CLIP -->
+  <path d="M 220 270 L 250 270" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Fusion Box -->
+  <rect x="370" y="190" width="160" height="80" fill="#fff9c4" stroke="#f9a825" stroke-width="3" rx="5"/>
+  <text x="450" y="215" font-family="Arial" font-size="15" font-weight="bold" text-anchor="middle" fill="#f57f17">Weighted Fusion</text>
+  <text x="450" y="235" font-family="Courier New" font-size="12" text-anchor="middle" fill="#e65100">α=0.55 (BERT)</text>
+  <text x="450" y="253" font-family="Courier New" font-size="12" text-anchor="middle" fill="#2e7d32">β=0.45 (CLIP)</text>
+  
+  <!-- Arrows to Fusion -->
+  <path d="M 340 180 L 370 210" stroke="#1976d2" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 340 270 L 370 250" stroke="#388e3c" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- PCA Box -->
+  <rect x="390" y="300" width="120" height="60" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="2" rx="5"/>
+  <text x="450" y="325" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="#6a1b9a">PCA + Norm</text>
+  <text x="450" y="345" font-family="Courier New" font-size="12" text-anchor="middle" fill="#4a148c">128D (float32)</text>
+  
+  <!-- Arrow Fusion to PCA -->
+  <path d="M 450 270 L 450 300" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Final Embeddings -->
+  <ellipse cx="450" cy="350" rx="5" ry="5" fill="#7b1fa2"/>
+  <text x="470" y="355" font-family="Courier New" font-size="11" fill="#666">item_emb_d128</text>
+  
+  <!-- Part 2: DIN Model -->
+  <rect x="630" y="100" width="520" height="600" fill="none" stroke="#d32f2f" stroke-width="2" stroke-dasharray="5,5"/>
+  <text x="640" y="125" font-family="Courier New" font-size="16" font-weight="bold" fill="#d32f2f">
+    PART 2: DIN MODEL (Deep Interest Network)
+  </text>
+  
+  <!-- User History -->
+  <rect x="660" y="160" width="180" height="70" fill="#e1f5fe" stroke="#0277bd" stroke-width="2" rx="5"/>
+  <text x="750" y="185" font-family="Arial" font-size="13" font-weight="bold" text-anchor="middle" fill="#01579b">User History</text>
+  <text x="750" y="205" font-family="Courier New" font-size="11" text-anchor="middle" fill="#0277bd">item_seq [50 items]</text>
+  <text x="750" y="220" font-family="Courier New" font-size="10" text-anchor="middle" fill="#666">Embedding(128D)</text>
+  
+  <!-- Target Item -->
+  <rect x="900" y="160" width="180" height="70" fill="#fce4ec" stroke="#c2185b" stroke-width="2" rx="5"/>
+  <text x="990" y="185" font-family="Arial" font-size="13" font-weight="bold" text-anchor="middle" fill="#880e4f">Target Item</text>
+  <text x="990" y="205" font-family="Courier New" font-size="11" text-anchor="middle" fill="#c2185b">item_id</text>
+  <text x="990" y="220" font-family="Courier New" font-size="10" text-anchor="middle" fill="#666">Embedding(128D)</text>
+  
+  <!-- Attention Module -->
+  <rect x="720" y="270" width="280" height="90" fill="#fff3e0" stroke="#ef6c00" stroke-width="3" rx="5"/>
+  <text x="860" y="295" font-family="Arial" font-size="15" font-weight="bold" text-anchor="middle" fill="#e65100">Attention Module</text>
+  <text x="860" y="315" font-family="Courier New" font-size="11" text-anchor="middle" fill="#bf360c">concat: [TE | HE | TE-HE | TE×HE]</text>
+  <text x="860" y="332" font-family="Courier New" font-size="10" text-anchor="middle" fill="#666">MLP: 4×128D → 80 → 1</text>
+  <text x="860" y="348" font-family="Courier New" font-size="10" text-anchor="middle" fill="#666">Softmax + Weighted Sum</text>
+  
+  <!-- Arrows to Attention -->
+  <path d="M 750 230 L 800 270" stroke="#0277bd" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 990 230 L 920 270" stroke="#c2185b" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- User Interest Vector -->
+  <rect x="720" y="390" width="140" height="50" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2" rx="5"/>
+  <text x="790" y="413" font-family="Arial" font-size="12" text-anchor="middle" fill="#1b5e20">User Interest</text>
+  <text x="790" y="428" font-family="Courier New" font-size="10" text-anchor="middle" fill="#666">Vector (128D)</text>
+  
+  <!-- Additional Features -->
+  <rect x="900" y="390" width="180" height="50" fill="#f3e5f5" stroke="#6a1b9a" stroke-width="2" rx="5"/>
+  <text x="990" y="410" font-family="Courier New" font-size="11" text-anchor="middle" fill="#4a148c">likes_level (16D)</text>
+  <text x="990" y="428" font-family="Courier New" font-size="11" text-anchor="middle" fill="#4a148c">views_level (16D)</text>
+  
+  <!-- Arrow Attention to User Interest -->
+  <path d="M 820 360 L 790 390" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- MLP -->
+  <rect x="760" y="470" width="220" height="100" fill="#ffebee" stroke="#c62828" stroke-width="3" rx="5"/>
+  <text x="870" y="495" font-family="Arial" font-size="15" font-weight="bold" text-anchor="middle" fill="#b71c1c">MLP Layers</text>
+  <text x="870" y="515" font-family="Courier New" font-size="11" text-anchor="middle" fill="#c62828">Linear(128+128+32 → 512)</text>
+  <text x="870" y="533" font-family="Courier New" font-size="11" text-anchor="middle" fill="#c62828">Dice(512) + Dropout(0.3)</text>
+  <text x="870" y="551" font-family="Courier New" font-size="11" text-anchor="middle" fill="#c62828">Linear(512 → 1)</text>
+  
+  <!-- Arrows to MLP -->
+  <path d="M 790 440 L 830 470" stroke="#2e7d32" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 990 440 L 910 470" stroke="#6a1b9a" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Output -->
+  <rect x="800" y="600" width="140" height="50" fill="#4caf50" stroke="#2e7d32" stroke-width="3" rx="5"/>
+  <text x="870" y="622" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Prediction</text>
+  <text x="870" y="640" font-family="Courier New" font-size="12" text-anchor="middle" fill="white">CTR (0.0-1.0)</text>
+  
+  <!-- Arrow MLP to Output -->
+  <path d="M 870 570 L 870 600" stroke="#333" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Training Info -->
+  <rect x="50" y="420" width="520" height="100" fill="#eceff1" stroke="#455a64" stroke-width="2" rx="5"/>
+  <text x="310" y="445" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="#263238">Training Pipeline</text>
+  <text x="310" y="467" font-family="Courier New" font-size="11" text-anchor="middle" fill="#37474f">Optimizer: AdamW (lr=1e-3) | Loss: BCEWithLogitsLoss</text>
+  <text x="310" y="485" font-family="Courier New" font-size="11" text-anchor="middle" fill="#37474f">Batch: Train=2048, Val=4096 | Epochs: 10</text>
+  <text x="310" y="503" font-family="Courier New" font-size="11" text-anchor="middle" fill="#37474f">Best Model: Max Validation AUC → submission.csv</text>
+  
+  <!-- Key Features Box -->
+  <rect x="50" y="550" width="520" height="130" fill="#fff8e1" stroke="#f9a825" stroke-width="2" rx="5"/>
+  <text x="310" y="575" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="#f57f17">🔑 Key Implementation Details</text>
+  <text x="70" y="600" font-family="Courier New" font-size="10" fill="#e65100">• float32 safe: All arrays explicitly cast to np.float32</text>
+  <text x="70" y="620" font-family="Courier New" font-size="10" fill="#e65100">• padding_idx=0: Special handling for missing items (item_id=0)</text>
+  <text x="70" y="640" font-family="Courier New" font-size="10" fill="#e65100">• Dice Activation: Custom PReLU variant with BatchNorm</text>
+  <text x="70" y="660" font-family="Courier New" font-size="10" fill="#e65100">• Output clipping: np.clip(1e-6, 1-1e-6) for stable submission</text>
+  
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#333"/>
+    </marker>
+  </defs>
+  
+  <!-- Connecting arrow from Part 1 to Part 2 -->
+  <path d="M 570 240 Q 600 240 630 240" stroke="#7b1fa2" stroke-width="3" fill="none" marker-end="url(#arrowhead)" stroke-dasharray="8,4"/>
+  <text x="600" y="230" font-family="Arial" font-size="11" font-weight="bold" text-anchor="middle" fill="#6a1b9a">Embeddings</text>
+  
+  <!-- Footer -->
+  <text x="600" y="730" font-family="Courier New" font-size="10" text-anchor="middle" fill="#999">
+    Implementation: Python 3.x | PyTorch | open_clip | polars | scikit-learn
+  </text>
+  <text x="600" y="750" font-family="Arial" font-size="11" font-style="italic" text-anchor="middle" fill="#666">
+    End-to-End Multimodal Recommendation System for Click-Through Rate Prediction
+  </text>
+  
+  <!-- Instructions (visible uniquement dans le code) -->
+  <!--
+    💾 POUR UTILISER CE SVG :
+    1. Cliquez sur "..." en haut à droite → Copy
+    2. Créez un fichier "diagram.svg" et collez le code
+    3. Ouvrez avec Chrome ou Firefox
+    4. Pour éditer : https://boxy-svg.com/app
+    5. Pour PNG : https://cloudconvert.com/svg-to-png
+  -->
+</svg>
